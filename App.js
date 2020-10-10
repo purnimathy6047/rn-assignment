@@ -17,7 +17,7 @@ export default function App() {
 
  const buttonClickListener = (text) =>{
     
-     Alert.alert("hello"+text);
+     Alert.alert(text);
   }
 
 console.log('here is the text', text);
