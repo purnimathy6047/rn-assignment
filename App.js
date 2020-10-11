@@ -7,9 +7,19 @@ export default function App() {
   const [text, setText] = useState('');  
   useEffect(
     () => {
-      fetch('https://api.github.com/users/purnimathy6047/repos')
+      const username = "purnimathy6047"
+      fetch(`https://api.github.com/users/${username}/repos`)
       .then(data => data.json())
-      .then(parsedData => setText(parsedData))
+      .then(parsedData => {
+        setText(parsedData)
+        const [firstRepo] = parsedData
+        fetch(`https://api.github.com/repos/${username}/${firstRepo.name}/commits?author=${username}`)
+       // api.github.com/repos/:user/{repositoryNameFromArray}/commits?author=:user.
+       .then(data => data.json())
+      .then(commitedList => {
+        console.log(commitedList)
+      })
+      })
     }, []);
   const changeHandler = (val) => {
     setText(val);
