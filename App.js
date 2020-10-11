@@ -23,7 +23,6 @@ export default function App() {
               }
             }) : null)
         
-        //console.log(commitedList)
         })
       })
     }, 
@@ -34,10 +33,10 @@ export default function App() {
     }
 
   const CommitItem = ({ author, commitHash,comment }) => (
-    <View >
-      <Text >{author}</Text>
-      <Text >{commitHash}</Text>
-      <Text >{comment}</Text>
+    <View style={styles.listItem}>
+      <Text style={styles.listItemHeader}>{author}</Text>
+      <Text style={styles.listContent}>{commitHash}</Text>
+      <Text style={styles.listContent}>{comment}</Text>
     </View>
   );
   
@@ -48,10 +47,12 @@ export default function App() {
 console.log( commits);
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text> List of Commits</Text>
+
+      <View>
+        <Text style={styles.header}> List of Commits</Text>
       </View>
-      <FlatList style ={styles.listItem}
+
+      <FlatList 
         data={commits}
         renderItem={renderCommitLog}
         keyExtractor={commit => commit.commitHash}
@@ -68,27 +69,31 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    /* alignItems: 'center',
-    justifyContent: 'center', */
+    /*  alignItems: 'center',
+    justifyContent: 'center',  */
   },
+  
   header:{
     backgroundColor: 'grey',
     alignContent: "center",
+    fontWeight: "bold",
     padding: 20
-
   },
+
   listItem:{
     backgroundColor: 'white',
     alignContent: "center",
-    padding: 20
+    padding: 5,
+    marginVertical: 8,
+    marginHorizontal: 10,
   },
 
-  input:{
-    borderWidth: 1,
-    borderColor: '#777',
-    padding: 8,
-    margin: 10,
-    width: 200,
+  listItemHeader:{
+    fontWeight: "bold"
+  },
 
-  }
+  listContent: {
+   // marginVertical: 8,
+    marginHorizontal: 16,
+  },
 });
