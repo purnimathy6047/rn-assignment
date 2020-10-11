@@ -7,37 +7,31 @@ export default function App() {
   const [commits, setCommits] = useState('');  
   useEffect(
     () => {
-      const username = "purnimathy6047"
-      fetch(`https://api.github.com/users/${username}/repos`)
-      .then(data => data.json())
-      .then(parsedData => {
-        const [firstRepo] = parsedData
-        fetch(`https://api.github.com/repos/${username}/${firstRepo.name}/commits?author=${username}`)
-       // api.github.com/repos/:user/{repositoryNameFromArray}/commits?author=:user.
-       .then(data => data.json())
-      .then(commitedList => {
-        setCommits(Array.isArray(commitedList) ? commitedList.map(commit => {
-          return {
-            author: commit.author.login,
-            commitHash: commit.sha,
-            comment: commit.commit.message
-          }
-          }) : null)
+        const username = "purnimathy6047"
+        fetch(`https://api.github.com/users/${username}/repos`)
+        .then(data => data.json())
+        .then(parsedData => {
+          const [firstRepo] = parsedData
+          fetch(`https://api.github.com/repos/${username}/${firstRepo.name}/commits?author=${username}`)
+          .then(data => data.json())
+          .then(commitedList => {
+            setCommits(Array.isArray(commitedList) ? commitedList.map(commit => {
+              return {
+                author: commit.author.login,
+                commitHash: commit.sha,
+                comment: commit.commit.message
+              }
+            }) : null)
         
         //console.log(commitedList)
+        })
       })
-      })
-    }, []);
-  const changeHandler = (val) => {
+    }, 
+  []);
+  
+  const changeHandler = (val) => {  
     setCommits(val);
     }
-
- const buttonClickListener = (text) =>{
-    
-     Alert.alert(text);
-  };
-
-
 
   const CommitItem = ({ author, commitHash,comment }) => (
     <View >
@@ -57,7 +51,7 @@ console.log( commits);
       <View style={styles.header}>
         <Text> List of Commits</Text>
       </View>
-      <FlatList
+      <FlatList style ={styles.listItem}
         data={commits}
         renderItem={renderCommitLog}
         keyExtractor={commit => commit.commitHash}
@@ -78,10 +72,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center', */
   },
   header:{
-    backgroundColor: 'pink',
+    backgroundColor: 'grey',
+    alignContent: "center",
     padding: 20
 
   },
+  listItem:{
+    backgroundColor: 'white',
+    alignContent: "center",
+    padding: 20
+  },
+
   input:{
     borderWidth: 1,
     borderColor: '#777',
